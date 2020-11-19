@@ -104,3 +104,4 @@ dist
 .tern-port
 
 gitner-discord-bot/credentials.js
+crawler/credentials.js
