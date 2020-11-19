@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+gitner-discord-bot/credentials.js
+crawler/credentials.js
