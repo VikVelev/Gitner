@@ -639,11 +639,13 @@ if __name__ == '__main__':
                     ret['precision'][0], ret['precision'][-1], ret['hit_ratio'][0], ret['hit_ratio'][-1],
                     ret['ndcg'][0], ret['ndcg'][-1])
         print(perf_str)
+        """
         summary_train_acc = sess.run(model.merged_train_acc, feed_dict={model.train_rec20: ret['recall'][0],
                                                                         model.train_rec100: ret['recall'][-1],
                                                                         model.train_ndcg20: ret['ndcg'][0],
                                                                         model.train_ndcg100: ret['ndcg'][-1]})
         train_writer.add_summary(summary_train_acc, (epoch + 1) // 20)
+        """
         
         '''
         *********************************************************
@@ -670,17 +672,21 @@ if __name__ == '__main__':
             mf_loss_test += batch_mf_loss_test / n_batch
             emb_loss_test += batch_emb_loss_test / n_batch
             
+        """
         summary_test_loss = sess.run(model.merged_test_loss,
                                      feed_dict={model.test_loss: loss_test, model.test_mf_loss: mf_loss_test,
                                                 model.test_emb_loss: emb_loss_test, model.test_reg_loss: reg_loss_test})
         train_writer.add_summary(summary_test_loss, (epoch + 1) // 20)
+        """
         t2 = time()
         users_to_test = list(data_generator.test_set.keys())
         ret = test(sess, model, users_to_test, drop_flag=True)
+        """
         summary_test_acc = sess.run(model.merged_test_acc,
                                     feed_dict={model.test_rec20: ret['recall'][0], model.test_rec100: ret['recall'][-1],
                                                model.test_ndcg20: ret['ndcg'][0], model.test_ndcg100: ret['ndcg'][-1]})
         train_writer.add_summary(summary_test_acc, (epoch + 1) // 20)
+        """
                                                                                                  
                                                                                                  
         t3 = time()
