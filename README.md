@@ -1,6 +1,15 @@
 # Gitner
 Tinder but for issues.
-Love from **Vik**, **Yida** and **Shadow**
+
+MLH Fellowship is a brand new experience for most of the people in here. At first everyone is out of their comfort zone and the impostor syndrome strikes when you expect it the least, wondering if you can handle a certain issue or should you just become a janitor? If that sounds familiar to you, then you might be this project's target audience. gitner (git + Tinder) matches you with the issue from a certain project that is most appropriate to you and your relevant experience!
+
+# Discord Bot
+
+As the best means of integration in the MLH Fellowship!
+
+# Github Crawler
+
+Making heavy use of the GitHub API in order to build the graph of users and their interactions with different repositories and issues.
 
 # Matching/Recommendation Backend
 For license and commercial issues please contact [Yida](https://wangyida.github.io/)
