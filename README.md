@@ -2,11 +2,15 @@
 Tinder but for issues.
 Love from **Vik**, **Yida** and **Shadow**
 
-# Matching backend
+# Matching/Recommendation Backend
 For license and commercial issues please contact [Yida](https://wangyida.github.io/)
 We aim at building a more concise and appropriate recommendation backend using *graph convolution network*. Specifically, [LightGCN](https://github.com/kuandeng/LightGCN) is adopted as the matching algorithm, which learns user and item embeddings and potential relationships. Furthermore, we refer to a [parallelized version](https://github.com/Wuyxin/LightGCN-parallelized-version) upon LightGCN to imrpove the inference speed. We are appreciate for original authors of such paper.
 
-## Crucial components
+## Numerical Performance
+We report the performance which are claimed in paper of [LightGCN](https://arxiv.org/pdf/2002.02126.pdf), where benchmarks are reported in 4 publically available datasets. Such quantitative results satisfy our need for building the recommending system which matches Github issues/repos to MLH students.
+![quantitatives](imgs/LightGCN__numericals.png)
+
+## Crucial Components
 User and Items should be provided as training data, in our scenario, user is github users, while items would be opensource projects/repos with which each user has interacted before.
 
 ## Organize your training data 
