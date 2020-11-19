@@ -12,6 +12,9 @@ import sys
 import threading
 import tensorflow as tf
 from tensorflow.python.client import device_lib
+tf.compat.v1.disable_eager_execution()
+
+
 from utility.helper import *
 from utility.batch_test import *
 
@@ -48,58 +51,58 @@ class LightGCN(object):
         *********************************************************
         Create Placeholder for Input Data & Dropout.
         '''
-        # placeholder definition
-        self.users = tf.placeholder(tf.int32, shape=(None,))
-        self.pos_items = tf.placeholder(tf.int32, shape=(None,))
-        self.neg_items = tf.placeholder(tf.int32, shape=(None,))
+        # compat.v1.placeholder definition
+        self.users = tf.compat.v1.placeholder(tf.int32, shape=(None,))
+        self.pos_items = tf.compat.v1.placeholder(tf.int32, shape=(None,))
+        self.neg_items = tf.compat.v1.placeholder(tf.int32, shape=(None,))
         
         self.node_dropout_flag = args.node_dropout_flag
-        self.node_dropout = tf.placeholder(tf.float32, shape=[None])
-        self.mess_dropout = tf.placeholder(tf.float32, shape=[None])
+        self.node_dropout = tf.compat.v1.placeholder(tf.float32, shape=[None])
+        self.mess_dropout = tf.compat.v1.placeholder(tf.float32, shape=[None])
         with tf.name_scope('TRAIN_LOSS'):
-            self.train_loss = tf.placeholder(tf.float32)
-            tf.summary.scalar('train_loss', self.train_loss)
-            self.train_mf_loss = tf.placeholder(tf.float32)
-            tf.summary.scalar('train_mf_loss', self.train_mf_loss)
-            self.train_emb_loss = tf.placeholder(tf.float32)
-            tf.summary.scalar('train_emb_loss', self.train_emb_loss)
-            self.train_reg_loss = tf.placeholder(tf.float32)
-            tf.summary.scalar('train_reg_loss', self.train_reg_loss)
-        self.merged_train_loss = tf.summary.merge(tf.get_collection(tf.GraphKeys.SUMMARIES, 'TRAIN_LOSS'))
+            self.train_loss = tf.compat.v1.placeholder(tf.float32)
+            tf.summary.scalar('train_loss', tf.reduce_mean(self.train_loss))
+            self.train_mf_loss = tf.compat.v1.placeholder(tf.float32)
+            tf.summary.scalar('train_mf_loss', tf.reduce_mean(self.train_mf_loss))
+            self.train_emb_loss = tf.compat.v1.placeholder(tf.float32)
+            tf.summary.scalar('train_emb_loss', tf.reduce_mean(self.train_emb_loss))
+            self.train_reg_loss = tf.compat.v1.placeholder(tf.float32)
+            tf.summary.scalar('train_reg_loss', tf.reduce_mean(self.train_reg_loss))
+        # self.merged_train_loss = tf.compat.v1.summary.merge(tf.compat.v1.get_collection(tf.compat.v1.GraphKeys.SUMMARIES, 'TRAIN_LOSS'))
         
         
         with tf.name_scope('TRAIN_ACC'):
-            self.train_rec20 = tf.placeholder(tf.float32)
-            tf.summary.scalar('train_rec20', self.train_rec20)
-            self.train_rec100 = tf.placeholder(tf.float32)
-            tf.summary.scalar('train_rec100', self.train_rec100)
-            self.train_ndcg20 = tf.placeholder(tf.float32)
-            tf.summary.scalar('train_ndcg20', self.train_ndcg20)
-            self.train_ndcg100 = tf.placeholder(tf.float32)
-            tf.summary.scalar('train_ndcg100', self.train_ndcg100)
-        self.merged_train_acc = tf.summary.merge(tf.get_collection(tf.GraphKeys.SUMMARIES, 'TRAIN_ACC'))
+            self.train_rec20 = tf.compat.v1.placeholder(tf.float32)
+            tf.summary.scalar('train_rec20', tf.reduce_mean(self.train_rec20))
+            self.train_rec100 = tf.compat.v1.placeholder(tf.float32)
+            tf.summary.scalar('train_rec100', tf.reduce_mean(self.train_rec100))
+            self.train_ndcg20 = tf.compat.v1.placeholder(tf.float32)
+            tf.summary.scalar('train_ndcg20', tf.reduce_mean(self.train_ndcg20))
+            self.train_ndcg100 = tf.compat.v1.placeholder(tf.float32)
+            tf.summary.scalar('train_ndcg100', tf.reduce_mean(self.train_ndcg100))
+        # self.merged_train_acc = tf.compat.v1.summary.merge(tf.compat.v1.get_collection(tf.compat.v1.GraphKeys.SUMMARIES, 'TRAIN_ACC'))
 
         with tf.name_scope('TEST_LOSS'):
-            self.test_loss = tf.placeholder(tf.float32)
-            tf.summary.scalar('test_loss', self.test_loss)
-            self.test_mf_loss = tf.placeholder(tf.float32)
-            tf.summary.scalar('test_mf_loss', self.test_mf_loss)
-            self.test_emb_loss = tf.placeholder(tf.float32)
-            tf.summary.scalar('test_emb_loss', self.test_emb_loss)
-            self.test_reg_loss = tf.placeholder(tf.float32)
-            tf.summary.scalar('test_reg_loss', self.test_reg_loss)
-        self.merged_test_loss = tf.summary.merge(tf.get_collection(tf.GraphKeys.SUMMARIES, 'TEST_LOSS'))
+            self.test_loss = tf.compat.v1.placeholder(tf.float32)
+            tf.summary.scalar('test_loss', tf.reduce_mean(self.test_loss))
+            self.test_mf_loss = tf.compat.v1.placeholder(tf.float32)
+            tf.summary.scalar('test_mf_loss', tf.reduce_mean(self.test_mf_loss))
+            self.test_emb_loss = tf.compat.v1.placeholder(tf.float32)
+            tf.summary.scalar('test_emb_loss', tf.reduce_mean(self.test_emb_loss))
+            self.test_reg_loss = tf.compat.v1.placeholder(tf.float32)
+            tf.summary.scalar('test_reg_loss', tf.reduce_mean(self.test_reg_loss))
+        # self.merged_test_loss = tf.compat.v1.summary.merge(tf.compat.v1.get_collection(tf.compat.v1.GraphKeys.SUMMARIES, 'TEST_LOSS'))
 
         with tf.name_scope('TEST_ACC'):
-            self.test_rec20 = tf.placeholder(tf.float32)
-            tf.summary.scalar('test_rec20', self.test_rec20)
-            self.test_rec100 = tf.placeholder(tf.float32)
-            tf.summary.scalar('test_rec100', self.test_rec100)
-            self.test_ndcg20 = tf.placeholder(tf.float32)
-            tf.summary.scalar('test_ndcg20', self.test_ndcg20)
-            self.test_ndcg100 = tf.placeholder(tf.float32)
-            tf.summary.scalar('test_ndcg100', self.test_ndcg100)
-        self.merged_test_acc = tf.summary.merge(tf.get_collection(tf.GraphKeys.SUMMARIES, 'TEST_ACC'))
+            self.test_rec20 = tf.compat.v1.placeholder(tf.float32)
+            tf.summary.scalar('test_rec20', tf.reduce_mean(self.test_rec20))
+            self.test_rec100 = tf.compat.v1.placeholder(tf.float32)
+            tf.summary.scalar('test_rec100', tf.reduce_mean(self.test_rec100))
+            self.test_ndcg20 = tf.compat.v1.placeholder(tf.float32)
+            tf.summary.scalar('test_ndcg20', tf.reduce_mean(self.test_ndcg20))
+            self.test_ndcg100 = tf.compat.v1.placeholder(tf.float32)
+            tf.summary.scalar('test_ndcg100', tf.reduce_mean(self.test_ndcg100))
+        # self.merged_test_acc = tf.compat.v1.summary.merge(tf.compat.v1.get_collection(tf.compat.v1.GraphKeys.SUMMARIES, 'TEST_ACC'))
         """
         *********************************************************
         Create Model Parameters (i.e., Initialize Weights).
@@ -153,7 +156,7 @@ class LightGCN(object):
                                                                           self.neg_i_g_embeddings)
         self.loss = self.mf_loss + self.emb_loss
 
-        self.opt = tf.train.AdamOptimizer(learning_rate=self.lr).minimize(self.loss)
+        self.opt = tf.compat.v1.train.AdamOptimizer(learning_rate=self.lr).minimize(self.loss)
         
     def create_model_str(self):
         log_dir = '/' + self.alg_type+'/layers_'+str(self.n_layers)+'/dim_'+str(self.emb_dim)
@@ -163,7 +166,7 @@ class LightGCN(object):
 
     def _init_weights(self):
         all_weights = dict()
-        initializer = tf.contrib.layers.xavier_initializer()
+        initializer = tf.initializers.GlorotUniform()# tf.contrib.layers.xavier_initializer()
         if self.pretrain_data is None:
             all_weights['user_embedding'] = tf.Variable(initializer([self.n_users, self.emb_dim]), name='user_embedding')
             all_weights['item_embedding'] = tf.Variable(initializer([self.n_items, self.emb_dim]), name='item_embedding')
@@ -238,7 +241,7 @@ class LightGCN(object):
 
             temp_embed = []
             for f in range(self.n_fold):
-                temp_embed.append(tf.sparse_tensor_dense_matmul(A_fold_hat[f], ego_embeddings))
+                temp_embed.append(tf.sparse.sparse_dense_matmul(A_fold_hat[f], ego_embeddings))
 
             side_embeddings = tf.concat(temp_embed, 0)
             ego_embeddings = side_embeddings
@@ -476,18 +479,18 @@ if __name__ == '__main__':
     *********************************************************
     Save the model parameters.
     """
-    saver = tf.train.Saver()
+    saver = tf.compat.v1.train.Saver()
 
     if args.save_flag == 1:
         layer = '-'.join([str(l) for l in eval(args.layer_size)])
         weights_save_path = '%sweights/%s/%s/%s/l%s_r%s' % (args.weights_path, args.dataset, model.model_type, layer,
                                                             str(args.lr), '-'.join([str(r) for r in eval(args.regs)]))
         ensureDir(weights_save_path)
-        save_saver = tf.train.Saver(max_to_keep=1)
+        save_saver = tf.compat.v1.train.Saver(max_to_keep=1)
 
-    config = tf.ConfigProto()
+    config = tf.compat.v1.ConfigProto()
     config.gpu_options.allow_growth = True
-    sess = tf.Session(config=config)
+    sess = tf.compat.v1.Session(config=config)
 
     """
     *********************************************************
@@ -526,7 +529,7 @@ if __name__ == '__main__':
             print('without pretraining.')
 
     else:
-        sess.run(tf.global_variables_initializer())
+        sess.run(tf.compat.v1.global_variables_initializer())
         cur_best_pre_0 = 0.
         print('without pretraining.')
 
@@ -565,7 +568,7 @@ if __name__ == '__main__':
     *********************************************************
     Train.
     """
-    tensorboard_model_path = '/logs'
+    tensorboard_model_path = './logs'
     if not os.path.exists(tensorboard_model_path):
         os.makedirs(tensorboard_model_path)
     run_time = 1
@@ -574,7 +577,7 @@ if __name__ == '__main__':
             run_time += 1
         else:
             break
-    train_writer = tf.summary.FileWriter(tensorboard_model_path +model.log_dir+ '/run_' + str(run_time), sess.graph)
+    train_writer = tf.compat.v1.summary.FileWriter(tensorboard_model_path +model.log_dir+ '/run_' + str(run_time), sess.graph)
     
     
     loss_loger, pre_loger, rec_loger, ndcg_loger, hit_loger = [], [], [], [], []
@@ -612,10 +615,12 @@ if __name__ == '__main__':
             mf_loss += batch_mf_loss/n_batch
             emb_loss += batch_emb_loss/n_batch
             
+        """
         summary_train_loss= sess.run(model.merged_train_loss,
                                       feed_dict={model.train_loss: loss, model.train_mf_loss: mf_loss,
                                                  model.train_emb_loss: emb_loss, model.train_reg_loss: reg_loss})
         train_writer.add_summary(summary_train_loss, epoch)
+        """
         if np.isnan(loss) == True:
             print('ERROR: loss is nan.')
             sys.exit()
