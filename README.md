@@ -8,7 +8,7 @@ We aim at building a more concise and appropriate recommendation backend using *
 
 ## Numerical Performance
 We report the performance which are claimed in paper of [LightGCN](https://arxiv.org/pdf/2002.02126.pdf), where benchmarks are reported in 4 publically available datasets. Such quantitative results satisfy our need for building the recommending system which matches Github issues/repos to MLH students.
-![quantitatives](imgs/LightGCN__numericals.png)
+![quantitatives](imgs/LightGCN_numericals.png)
 
 ## Crucial Components
 User and Items should be provided as training data, in our scenario, user is github users, while items would be opensource projects/repos with which each user has interacted before.
