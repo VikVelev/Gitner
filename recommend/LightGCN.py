@@ -638,6 +638,8 @@ if __name__ == '__main__':
                    (epoch, loss, mf_loss, emb_loss, reg_loss, ret['recall'][0], ret['recall'][-1],
                     ret['precision'][0], ret['precision'][-1], ret['hit_ratio'][0], ret['hit_ratio'][-1],
                     ret['ndcg'][0], ret['ndcg'][-1])
+        for i in range(len(ret['recommend'])):
+            print('user', i, ret['recommend'][i])
         print(perf_str)
         """
         summary_train_acc = sess.run(model.merged_train_acc, feed_dict={model.train_rec20: ret['recall'][0],
