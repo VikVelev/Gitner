@@ -710,6 +710,8 @@ for epoch in range(500):
                     (epoch, t2 - t1, t3 - t2, loss_test, mf_loss_test, emb_loss_test, reg_loss_test, ret['recall'][0], ret['recall'][-1],
                     ret['precision'][0], ret['precision'][-1], ret['hit_ratio'][0], ret['hit_ratio'][-1],
                     ret['ndcg'][0], ret['ndcg'][-1])
+        for i in range(len(ret['recommend'])):
+            print('user', i, ret['recommend'][i])
         print(perf_str)
 
     cur_best_pre_0, stopping_step, should_stop = early_stopping(ret['recall'][0], cur_best_pre_0,
