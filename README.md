@@ -43,7 +43,10 @@ Assume that we present 6 users with index of 0, 1, 2, 3, 4, 5; and 20 repos of 0
   * Each line is a triplet (org_id, remap_id) for one item, where org_id and remap_id represent the ID of the item in the original and our datasets, respectively.
 
 
-# Materials on Github:
+# Gitner experiment:
+```python
+python3 LightGCN.py --dataset gitner --regs "[1e-4]" --embed_size 2 --layer_size "[64,64,64,64]" --lr 0.001 --batch_size 256 --epoch 100 --test_flag full
+```
 ## Github repo
 ```
 org_id remap_id
