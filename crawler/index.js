@@ -5,6 +5,48 @@ const githubCreds = require('./credentials.js');
 let numOfPages = 4;
 let users = ["VikVelev", "wangyida", "lyuben-todorov", "nikifaets", "zvezdin", "harshitsinghai77"]
 let userToId = { "VikVelev" : 0, "wangyida" : 1, "lyuben-todorov": 2, "nikifaets": 3, "zvezdin": 4, "harshitsinghai77": 5 }
+let items = {
+    "313907014" :0,
+    "309142471" :1,
+    "105590837" :2,
+    "292541788" :3,
+    "302926814" :4,
+    "123235" :5,
+    "302050767" :6,
+    "239201565" :7,
+    "314321436" :8,
+    "210187897" :9,
+    "287064874" :10,
+    "287086670" :11,
+    "305531165" :12,
+    "295803355" :13,
+    "230105785" :14,
+    "105822413":15,
+    "306693544" :16,
+    "247161307" :17,
+    "279966275" :18,
+    "220065188" :19,
+    "11512043" :20,
+    "27609918" :21,
+    "240920902" :22,
+    "296741564" :23,
+    "52729242" :24,
+    "110178895" :25,
+    "36040894" :26,
+    "305204141" :27,
+    "287597740" :28,
+    "172562475" :29,
+    "313085547" :30,
+    "312798229" :31,
+    "311338155" :32,
+    "312337313" :33,
+    "179663462" :34,
+    "309636647" :35,
+    "226452642" :36,
+    "62852742" : 37,
+    "6701057" : 38,
+    "278406578" : 39
+}
 
 let extractData = async () => {
     let adjList = {}
@@ -34,9 +76,10 @@ let extractData = async () => {
                                 x.type === "PullRequestReviewEvent" ||
                                 x.type === "PullRequestReviewCommentEvent").map(x => x.repo)
         
+        
         dataWithUrls.push(...data);
-        data = data.map(x => x.id)
-        adjList[currentUser] = data;
+        data = new Set([...data.map(x => items[x.id + ""])])
+        adjList[currentUser] = [...data];
     }
     
     let trainingFile = ""
