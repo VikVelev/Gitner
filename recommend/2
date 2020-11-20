@@ -62,7 +62,6 @@ def ranklist_by_sorted(user_pos_test, test_items, rating, Ks):
 
     K_max = max(Ks)
     K_max_item_score = heapq.nlargest(K_max, item_score, key=item_score.get)
-    print(K_max, K_max_item_score)
 
     r = []
     for i in K_max_item_score:
@@ -111,6 +110,7 @@ def test_one_user(x):
     return get_performance(user_pos_test, r, auc, Ks)
 
 def test_one_user_train(x):
+    import ipdb; ipdb.set_trace()
     # user u's ratings for user u
     rating = x[0]
     # uid
@@ -120,7 +120,6 @@ def test_one_user_train(x):
     training_items = []
     # user u's items in the test set
     user_pos_test = data_generator.train_items[u]
-    # print('train:', u, 'test:', user_pos_test)
 
     all_items = set(range(ITEM_NUM))
 
