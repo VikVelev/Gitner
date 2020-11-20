@@ -62,7 +62,7 @@ def ranklist_by_sorted(user_pos_test, test_items, rating, Ks):
 
     K_max = max(Ks)
     K_max_item_score = heapq.nlargest(K_max, item_score, key=item_score.get)
-    print(K_max, K_max_item_score)
+    print('User', K_max_item_score)
 
     r = []
     for i in K_max_item_score:
@@ -106,7 +106,7 @@ def test_one_user(x):
     if args.test_flag == 'part':
         r, auc = ranklist_by_heapq(user_pos_test, test_items, rating, Ks)
     else:
-        r, auc = ranklist_by_sorted(user_pos_test, test_items, rating, Ks)
+        # r, auc = ranklist_by_sorted(user_pos_test, test_items, rating, Ks)
 
     return get_performance(user_pos_test, r, auc, Ks)
 
