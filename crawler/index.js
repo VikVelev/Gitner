@@ -4,7 +4,7 @@ const githubCreds = require('./credentials.js');
 
 let numOfPages = 4;
 let users = ["VikVelev", "wangyida", "lyuben-todorov", "nikifaets", "zvezdin"]
-let userToId = { "VikVelev" : 1, "wangyida" : 2, "lyuben-todorov": 3, "nikifaets": 4, "zvezdin": 5 }
+let userToId = { "VikVelev" : 0, "wangyida" : 1, "lyuben-todorov": 2, "nikifaets": 3, "zvezdin": 4 }
 
 let extractData = async () => {
     let adjList = {}
@@ -39,8 +39,8 @@ let extractData = async () => {
         adjList[currentUser] = data;
     }
     
-    
     let trainingFile = ""
+    let trainingMap = []
     
     for (const key in adjList) {
         if (adjList.hasOwnProperty(key)) {
@@ -49,9 +49,29 @@ let extractData = async () => {
         trainingFile += "\n"
     }
 
+    let itemMapping = "";
+
+    let dataSet = new Set();
+
+    dataWithUrls.forEach((x) => dataSet.add(x.id))
+
+    dataSet = [...dataSet]
+
+    for (let i = 0; i < dataSet.length; i++) {
+        itemMapping += dataSet[i] + " " + i +"\n";
+    }
+
+    let userMapping = "";
+
+    for (let i = 0; i < users.length; i++) {
+        userMapping += users[i] + " " + i + "\n";
+    }
+
     fs.writeFileSync('user_adj_list.json', JSON.stringify(adjList))
     fs.writeFileSync('data_with_urls.json', JSON.stringify(dataWithUrls))
     fs.writeFileSync('training.txt', trainingFile)
+    fs.writeFileSync('item_mapping.txt', itemMapping)
+    fs.writeFileSync('user_mapping.txt', userMapping)
 }
 
 

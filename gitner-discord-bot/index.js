@@ -11,10 +11,12 @@ client.on('message', message => {
         let command = message.content.split("!gitner ")[1];
 
         if (command.startsWith("match ")) {
+            
             let project = command.split("match ")[1]
             console.log(message.content);
             
             message.react('👌');
+
             const embed = new Discord.MessageEmbed()
                 .setTitle(`Hey ${message.author.username}, I found this juicy issue just for your liking!`)
                 .setAuthor("Gitner thinks this is best for you!", "https://i.ibb.co/Fqw0Scq/Untitled-Diagram.jpg")
