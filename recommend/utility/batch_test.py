@@ -55,14 +55,18 @@ def get_auc(item_score, user_pos_test):
     auc = metrics.auc(ground_truth=r, prediction=posterior)
     return auc
 
-def ranklist_by_sorted(user_pos_test, test_items, rating, Ks):
+def ranklist_by_sorted(user_pos_test, test_items, rating, Ks, write):
     item_score = {}
     for i in test_items:
         item_score[i] = rating[i]
 
     K_max = max(Ks)
     K_max_item_score = heapq.nlargest(K_max, item_score, key=item_score.get)
-    print('User', K_max_item_score)
+    if write is True:
+        print(heapq.nlargest(10, item_score, key=item_score.get))
+        # text_file = open("recommend.txt", "w")
+        # text_file.writelines([item  for item in K_max_item_score])
+        # text_file.write(K_max_item_score)
 
     r = []
     for i in K_max_item_score:
@@ -106,7 +110,7 @@ def test_one_user(x):
     if args.test_flag == 'part':
         r, auc = ranklist_by_heapq(user_pos_test, test_items, rating, Ks)
     else:
-        # r, auc = ranklist_by_sorted(user_pos_test, test_items, rating, Ks)
+        r, auc = ranklist_by_sorted(user_pos_test, test_items, rating, Ks, False)
 
     return get_performance(user_pos_test, r, auc, Ks)
 
@@ -129,7 +133,7 @@ def test_one_user_train(x):
     if args.test_flag == 'part':
         r, auc = ranklist_by_heapq(user_pos_test, test_items, rating, Ks)
     else:
-        r, auc = ranklist_by_sorted(user_pos_test, test_items, rating, Ks)
+        r, auc = ranklist_by_sorted(user_pos_test, test_items, rating, Ks, True)
 
     return get_performance(user_pos_test, r, auc, Ks)
 
