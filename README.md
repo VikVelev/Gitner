@@ -30,8 +30,6 @@ User and Items should be provided as training data, in our scenario, user is git
 
 ![Gitner architecture diagram](https://i.ibb.co/d2fhKGg/hello.png)
 
-https://i.ibb.co/d2fhKGg/hello.png
-
 ## Organize your training data
 
 As there are 2 crucial components in Github issues matching process: _user_ and _issues_. Basically we need training data which includes the history of repos/issues/PRs with which each user has interacted.
