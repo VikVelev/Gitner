@@ -3,8 +3,8 @@ const fs = require('fs');
 const githubCreds = require('./credentials.js');
 
 let numOfPages = 4;
-let users = ["VikVelev", "wangyida", "lyuben-todorov", "nikifaets", "zvezdin"]
-let userToId = { "VikVelev" : 0, "wangyida" : 1, "lyuben-todorov": 2, "nikifaets": 3, "zvezdin": 4 }
+let users = ["VikVelev", "wangyida", "lyuben-todorov", "nikifaets", "zvezdin", "harshitsinghai77"]
+let userToId = { "VikVelev" : 0, "wangyida" : 1, "lyuben-todorov": 2, "nikifaets": 3, "zvezdin": 4, "harshitsinghai77": 5 }
 
 let extractData = async () => {
     let adjList = {}
