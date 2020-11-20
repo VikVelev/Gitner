@@ -12,7 +12,7 @@ import multiprocessing
 import heapq
 cores = multiprocessing.cpu_count() // 2
 
-args = parse_args()
+args, _ = parse_args()
 Ks = eval(args.Ks)
 
 data_generator = Data(path=args.data_path + args.dataset, batch_size=args.batch_size)
