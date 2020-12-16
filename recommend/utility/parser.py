@@ -68,4 +68,4 @@ def parse_args():
     parser.add_argument('--report', type=int, default=0,
                         help='0: Disable performance report w.r.t. sparsity levels, 1: Show performance report w.r.t. sparsity levels')
 
-    return parser.parse_args()
+    return parser.parse_known_args()
